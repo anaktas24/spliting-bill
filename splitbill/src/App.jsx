@@ -1,4 +1,5 @@
 
+import { useState } from 'react'
 import './App.css'
 
 function App() {
@@ -12,22 +13,31 @@ function App() {
 }
 
 function TipCalculator(){
+  const [bill, setBill] = useState("")
+  const [percentage1, setPercentage1] = useState(0)
+  const [percentage2, setPercentage2] = useState(0)
+
+
   return(
     <div>
-      <BillInput/>
-      <SelectPercentage>How did you like the service?</SelectPercentage>
-      <SelectPercentage>How did your friend like the service?</SelectPercentage>
-      <Output/>
+      <BillInput bill={bill} onSetBill={setBill}/>
+      <SelectPercentage percentage1={percentage1} onSelect={setPercentage1}>How did you like the service?</SelectPercentage>
+      <SelectPercentage percentage1={percentage2} onSelect={setPercentage2}>How did your friend like the service?</SelectPercentage>
+      <Output bill={bill}/>
       <Reset/>
     </div>
   )
 }
 
-function BillInput(){
+function BillInput({bill,onSetBill}){
   return(
     <div>
       <label>How much was the bill?</label>
-      <input type='text' placeholder='Bill value'/>
+      <input
+        type='text'
+        placeholder='Bill value'
+        value={bill}
+        onChange={(e)=>onSetBill(Number(e.target.value))}/>
     </div>
   )
 }
@@ -46,21 +56,21 @@ function SelectPercentage({children}){
   )
 }
 
-function Output(){
+function Output({bill}){
   return(
     <div>
       <h3>
-        You pay X ($A -$B tip)
+        You pay X (${bill} -$B tip)
       </h3>
     </div>
   )
 }
 
-function Reset(bgColor, textColor){
+function Reset(){
   return(
     <div>
       <button >
-
+        Reset
       </button>
     </div>
   )
