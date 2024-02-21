@@ -21,8 +21,8 @@ function TipCalculator(){
   return(
     <div>
       <BillInput bill={bill} onSetBill={setBill}/>
-      <SelectPercentage percentage1={percentage1} onSelect={setPercentage1}>How did you like the service?</SelectPercentage>
-      <SelectPercentage percentage1={percentage2} onSelect={setPercentage2}>How did your friend like the service?</SelectPercentage>
+      <SelectPercentage percentage={percentage1} onSelect={setPercentage1}>How did you like the service?</SelectPercentage>
+      <SelectPercentage percentage={percentage2} onSelect={setPercentage2}>How did your friend like the service?</SelectPercentage>
       <Output bill={bill}/>
       <Reset/>
     </div>
@@ -42,11 +42,13 @@ function BillInput({bill,onSetBill}){
   )
 }
 
-function SelectPercentage({children}){
+function SelectPercentage({children, percentage, onSelect}){
   return(
     <div>
       <label>{children}</label>
-      <select>
+      <select
+        value={percentage}
+        onChange={(e)=> onSelect(Number(e.target.value))}>
         <option value="0">Dissatisfied (0%)</option>
         <option value="5">Acceptable (5%)</option>
         <option value="10">Good (10%)</option>
